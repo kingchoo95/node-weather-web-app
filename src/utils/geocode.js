@@ -33,6 +33,7 @@ const getGeoCode = (placename, callback) =>{
     const url = 'http://api.openweathermap.org/data/2.5/weather?q='+encodeURIComponent(location) +'&appid=8c049f5c7c42913842c24adedcc95fbb';
 
     request({url: url,json:true},(error,{body})=>{
+        console.log(body)
         if(error){
             callback({status: false, error: 'Unable to connect to service!'})
         }else if(body.cod != "200"){
@@ -40,7 +41,7 @@ const getGeoCode = (placename, callback) =>{
             callback({status: false, error: body.message})
         }else{
             // const data = JSON.parse(response.body)
-            callback({status: true, weather: body.weather[0].description})
+            callback({status: true, weather: body.weather[0].description+'. The high today is '+body.main.temp_max+' fahrenheit and the low today is '+body.main.temp_min+' fahrenheit.'})
         }
     })
 
